@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -38,7 +38,7 @@ function RootRedirect() {
 export default function App() {
   return (
       <ThemeProvider>
-        <HashRouter>
+        <BrowserRouter>
         <AuthProvider>
           <ToastProvider>
             <Routes>
@@ -88,7 +88,7 @@ export default function App() {
             </Routes>
           </ToastProvider>
         </AuthProvider>
-      </HashRouter>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
