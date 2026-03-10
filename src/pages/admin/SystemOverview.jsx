@@ -16,8 +16,8 @@ export default function SystemOverview() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">System Overview</h1>
-        <p className="text-slate-500 text-sm mt-1">Real-time system health and analytics</p>
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-white">System Overview</h1>
+        <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Real-time system health and analytics</p>
       </div>
 
       {/* System health */}
@@ -37,7 +37,7 @@ export default function SystemOverview() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Appointments trend */}
         <div className="card p-6">
-          <h3 className="font-bold text-slate-800 mb-5">Monthly Appointments</h3>
+          <h3 className="font-bold text-slate-800 dark:text-white mb-5">Monthly Appointments</h3>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={chartData.appointmentsByMonth}>
               <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
@@ -51,7 +51,7 @@ export default function SystemOverview() {
 
         {/* Department distribution */}
         <div className="card p-6">
-          <h3 className="font-bold text-slate-800 mb-5">Department Distribution</h3>
+          <h3 className="font-bold text-slate-800 dark:text-white mb-5">Department Distribution</h3>
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
               <Pie data={chartData.departmentStats} cx="50%" cy="50%" outerRadius={80} paddingAngle={3} dataKey="value" label={({ name, value }) => `${name} ${value}%`} labelLine={false}>
@@ -66,7 +66,7 @@ export default function SystemOverview() {
       {/* Summary stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="card p-6">
-          <h3 className="font-bold text-slate-800 mb-4">Patient Stats</h3>
+          <h3 className="font-bold text-slate-800 dark:text-white mb-4">Patient Stats</h3>
           <div className="space-y-3">
             {[
               { label: 'Total Registered', value: patients.length },
@@ -75,14 +75,14 @@ export default function SystemOverview() {
               { label: 'Recovered', value: patients.filter(p => p.status === 'Recovered').length },
             ].map(({ label, value }) => (
               <div key={label} className="flex items-center justify-between">
-                <span className="text-sm text-slate-500">{label}</span>
+                <span className="text-sm text-slate-500 dark:text-slate-400">{label}</span>
                 <span className="text-sm font-bold text-slate-800">{value}</span>
               </div>
             ))}
           </div>
         </div>
         <div className="card p-6">
-          <h3 className="font-bold text-slate-800 mb-4">Doctor Stats</h3>
+          <h3 className="font-bold text-slate-800 dark:text-white mb-4">Doctor Stats</h3>
           <div className="space-y-3">
             {[
               { label: 'Total Doctors', value: doctors.length },
@@ -91,14 +91,14 @@ export default function SystemOverview() {
               { label: 'Avg Rating', value: (doctors.reduce((s, d) => s + d.rating, 0) / doctors.length).toFixed(1) },
             ].map(({ label, value }) => (
               <div key={label} className="flex items-center justify-between">
-                <span className="text-sm text-slate-500">{label}</span>
+                <span className="text-sm text-slate-500 dark:text-slate-400">{label}</span>
                 <span className="text-sm font-bold text-slate-800">{value}</span>
               </div>
             ))}
           </div>
         </div>
         <div className="card p-6">
-          <h3 className="font-bold text-slate-800 mb-4">Appointment Stats</h3>
+          <h3 className="font-bold text-slate-800 dark:text-white mb-4">Appointment Stats</h3>
           <div className="space-y-3">
             {[
               { label: 'Total', value: appointments.length },
@@ -107,7 +107,7 @@ export default function SystemOverview() {
               { label: 'Completed', value: appointments.filter(a => a.status === 'Completed').length },
             ].map(({ label, value }) => (
               <div key={label} className="flex items-center justify-between">
-                <span className="text-sm text-slate-500">{label}</span>
+                <span className="text-sm text-slate-500 dark:text-slate-400">{label}</span>
                 <span className="text-sm font-bold text-slate-800">{value}</span>
               </div>
             ))}

@@ -33,8 +33,8 @@ export default function BookAppointment() {
       <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6 animate-slide-up">
         <CheckCircle size={40} className="text-emerald-500" />
       </div>
-      <h2 className="text-2xl font-bold text-slate-800 mb-2">Appointment Confirmed!</h2>
-      <p className="text-slate-500 text-center max-w-sm mb-6">Your appointment with {selectedDoctor?.name} on {selectedDate} at {selectedTime} has been confirmed.</p>
+      <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">Appointment Confirmed!</h2>
+      <p className="text-slate-500 dark:text-slate-400 text-center max-w-sm mb-6">Your appointment with {selectedDoctor?.name} on {selectedDate} at {selectedTime} has been confirmed.</p>
       <button onClick={() => { setBooked(false); setStep(0); setSelectedDoctor(null); setSelectedDate(''); setSelectedTime(''); }}
         className="btn-primary">Book Another</button>
     </div>
@@ -43,8 +43,8 @@ export default function BookAppointment() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">Book Appointment</h1>
-        <p className="text-slate-500 text-sm mt-1">Schedule a visit with our specialists</p>
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Book Appointment</h1>
+        <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Schedule a visit with our specialists</p>
       </div>
 
       {/* Steps */}
@@ -54,13 +54,13 @@ export default function BookAppointment() {
             <React.Fragment key={s}>
               <div className="flex items-center gap-2">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all
-                  ${i < step ? 'bg-emerald-500 text-white' : i === step ? 'bg-primary-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
+                  ${i < step ? 'bg-emerald-500 text-white' : i === step ? 'bg-primary-600 text-white' : 'bg-slate-100 dark:bg-dark-muted text-slate-400'}`}>
                   {i < step ? <CheckCircle size={16} /> : i + 1}
                 </div>
-                <span className={`text-sm font-medium hidden sm:block ${i === step ? 'text-primary-700' : i < step ? 'text-emerald-600' : 'text-slate-400'}`}>{s}</span>
+                <span className={`i === step ? 'text-primary-700 dark:text-primary-400' : i < step ? 'text-emerald-600' : 'text-slate-400 dark:text-slate-600' : 'text-slate-400'}`}>{s}</span>
               </div>
               {i < steps.length - 1 && (
-                <div className={`flex-1 h-0.5 mx-3 transition-all ${i < step ? 'bg-emerald-400' : 'bg-slate-200'}`} />
+                <div className={`flex-1 h-0.5 mx-3 transition-all ${i < step ? 'bg-emerald-400' : 'bg-slate-200 dark:bg-dark-muted'}`} />
               )}
             </React.Fragment>
           ))}
@@ -70,10 +70,10 @@ export default function BookAppointment() {
       {/* Step 0: Doctor selection */}
       {step === 0 && (
         <div className="space-y-4">
-          <div className="flex items-center gap-3 bg-white rounded-xl border border-slate-200 px-4 py-3">
+          <div className="flex items-center gap-3 bg-white dark:bg-[#16161f] rounded-xl border border-slate-200 dark:border-[#ffffff15] px-4 py-3">
             <Search size={16} className="text-slate-400" />
             <input type="text" placeholder="Search doctors by name or specialty..." value={search} onChange={e => setSearch(e.target.value)}
-              className="bg-transparent text-sm outline-none flex-1 text-slate-700 placeholder-slate-400" />
+            className="bg-transparent text-sm outline-none flex-1 text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-600" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filtered.map(doc => (
@@ -86,7 +86,7 @@ export default function BookAppointment() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="font-bold text-slate-800">{doc.name}</p>
+                        <p className="font-bold text-slate-800 dark:text-white">{doc.name}</p>
                         <p className="text-xs text-primary-600 font-medium">{doc.specialty}</p>
                       </div>
                       <div className="flex items-center gap-1 text-amber-500">
@@ -94,13 +94,13 @@ export default function BookAppointment() {
                       </div>
                     </div>
                     <div className="flex items-center gap-3 mt-2 flex-wrap">
-                      <span className="text-xs text-slate-500">{doc.experience}</span>
-                      <span className="text-xs text-slate-400">·</span>
-                      <span className="text-xs text-slate-500">{doc.patients} patients</span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400">{doc.experience}</span>
+                      <span className="text-xs text-slate-400 dark:text-slate-600">·</span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400">{doc.patients} patients</span>
                     </div>
                     <div className="flex items-center gap-2 mt-2">
                       <span className="badge-green text-[10px]">Available</span>
-                      <span className="text-xs text-slate-400">Next: {doc.nextSlot}</span>
+                      <span className="text-xs text-slate-400 dark:text-slate-500">Next: {doc.nextSlot}</span>
                     </div>
                   </div>
                 </div>
@@ -119,18 +119,18 @@ export default function BookAppointment() {
                 {selectedDoctor?.avatar}
               </div>
               <div>
-                <p className="font-bold text-slate-800">{selectedDoctor?.name}</p>
+                <p className="font-bold text-slate-800 dark:text-white">{selectedDoctor?.name}</p>
                 <p className="text-sm text-primary-600">{selectedDoctor?.specialty}</p>
               </div>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Appointment Type</label>
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Appointment Type</label>
                 <div className="flex gap-2 flex-wrap">
                   {['Consultation', 'Follow-up', 'Check-up', 'Emergency'].map(t => (
                     <button key={t} onClick={() => setType(t)}
-                      className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all ${type === t ? 'bg-primary-600 text-white border-primary-600' : 'border-slate-200 text-slate-600 hover:border-primary-300'}`}>
+                      className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all ${type === t ? 'bg-primary-600 text-white border-primary-600' : 'border-slate-200 dark:border-[#ffffff15] text-slate-600 dark:text-slate-300 hover:border-primary-300'}`}>
                       {t}
                     </button>
                   ))}
@@ -138,11 +138,11 @@ export default function BookAppointment() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Select Date</label>
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Select Date</label>
                 <div className="flex gap-2 flex-wrap">
                   {availableSlots.map(s => (
                     <button key={s.date} onClick={() => setSelectedDate(s.date)}
-                      className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all ${selectedDate === s.date ? 'bg-primary-600 text-white border-primary-600' : 'border-slate-200 text-slate-600 hover:border-primary-300'}`}>
+                      className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all ${selectedDate === s.date ? 'bg-primary-600 text-white border-primary-600' : 'border-slate-200 dark:border-[#ffffff15] text-slate-600 dark:text-slate-300 hover:border-primary-300'}`}>
                       {s.date}
                     </button>
                   ))}
@@ -151,11 +151,11 @@ export default function BookAppointment() {
 
               {selectedDate && (
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Select Time</label>
+                  <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Select Time</label>
                   <div className="flex gap-2 flex-wrap">
                     {availableSlots.find(s => s.date === selectedDate)?.slots.map(t => (
                       <button key={t} onClick={() => setSelectedTime(t)}
-                        className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all flex items-center gap-1.5 ${selectedTime === t ? 'bg-primary-600 text-white border-primary-600' : 'border-slate-200 text-slate-600 hover:border-primary-300'}`}>
+                        className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all flex items-center gap-1.5 ${selectedTime === t ? 'bg-primary-600 text-white border-primary-600' : 'border-slate-200 dark:border-[#ffffff15] text-slate-600 dark:text-slate-300 hover:border-primary-300'}`}>
                         <Clock size={13} />{t}
                       </button>
                     ))}
@@ -164,7 +164,7 @@ export default function BookAppointment() {
               )}
 
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Additional Notes</label>
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Additional Notes</label>
                 <textarea value={notes} onChange={e => setNotes(e.target.value)}
                   rows={3} placeholder="Describe your symptoms or reason for visit..."
                   className="input-field resize-none" />
@@ -184,7 +184,7 @@ export default function BookAppointment() {
       {step === 2 && (
         <div className="space-y-5">
           <div className="card p-6">
-            <h3 className="font-bold text-slate-800 mb-5">Appointment Summary</h3>
+            <h3 className="font-bold text-slate-800 dark:text-white mb-5">Appointment Summary</h3>
             <div className="space-y-4">
               {[
                 { label: 'Doctor', value: selectedDoctor?.name },
@@ -194,9 +194,9 @@ export default function BookAppointment() {
                 { label: 'Time', value: selectedTime },
                 { label: 'Notes', value: notes || 'None provided' },
               ].map(({ label, value }) => (
-                <div key={label} className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0">
-                  <span className="text-sm text-slate-500 font-medium">{label}</span>
-                  <span className="text-sm font-semibold text-slate-800">{value}</span>
+                <div key={label} className="flex items-center justify-between py-2 border-b border-slate-50 dark:border-dark-border last:border-0">
+                  <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">{label}</span>
+                  <span className="text-sm font-semibold text-slate-800 dark:text-white">{value}</span>
                 </div>
               ))}
             </div>

@@ -9,8 +9,8 @@ export default function Prescriptions() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">My Prescriptions</h1>
-        <p className="text-slate-500 text-sm mt-1">View and manage your medications</p>
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-white">My Prescriptions</h1>
+        <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">View and manage your medications</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -18,7 +18,7 @@ export default function Prescriptions() {
           <div className="flex items-center gap-3">
             <div className="bg-primary-100 p-3 rounded-2xl"><Pill size={20} className="text-primary-600" /></div>
             <div>
-              <p className="text-2xl font-bold text-slate-800">{myRx.filter(r => r.status === 'Active').length}</p>
+              <p className="text-2xl font-bold text-slate-800 dark:text-white">{myRx.filter(r => r.status === 'Active').length}</p>
               <p className="text-sm text-slate-500">Active Prescriptions</p>
             </div>
           </div>
@@ -27,8 +27,8 @@ export default function Prescriptions() {
           <div className="flex items-center gap-3">
             <div className="bg-emerald-100 p-3 rounded-2xl"><CheckCircle size={20} className="text-emerald-600" /></div>
             <div>
-              <p className="text-2xl font-bold text-slate-800">{myRx.filter(r => r.status === 'Completed').length}</p>
-              <p className="text-sm text-slate-500">Completed</p>
+              <p className="text-2xl font-bold text-slate-800 dark:text-white">{myRx.filter(r => r.status === 'Completed').length}</p>
+              <p className="text-sm text-slate-500 ">Completed</p>
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@ export default function Prescriptions() {
       <div className="space-y-4">
         {myRx.map(rx => (
           <div key={rx.id} className="card overflow-hidden">
-            <button className="w-full p-5 flex items-start justify-between gap-4 hover:bg-slate-50 transition-colors"
+            <button className="w-full p-5 flex items-start justify-between gap-4 hover:bg-slate-50 dark:hover:bg-[#1a1a28] transition-colors"
               onClick={() => setExpanded(expanded === rx.id ? null : rx.id)}>
               <div className="flex items-start gap-4">
                 <div className={`p-3 rounded-2xl ${rx.status === 'Active' ? 'bg-primary-100' : 'bg-slate-100'}`}>
@@ -45,14 +45,14 @@ export default function Prescriptions() {
                 </div>
                 <div className="text-left">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <p className="font-bold text-slate-800">{rx.diagnosis}</p>
+                    <p className="font-bold text-slate-800 dark:text-white">{rx.diagnosis}</p>
                     <span className={rx.status === 'Active' ? 'badge-blue' : 'badge-gray'}>{rx.status}</span>
                   </div>
                   <div className="flex items-center gap-4 mt-1 flex-wrap">
                     <span className="text-xs text-slate-500 flex items-center gap-1"><User size={11} />{rx.doctorName}</span>
                     <span className="text-xs text-slate-500 flex items-center gap-1"><Calendar size={11} />{rx.date}</span>
                   </div>
-                  <p className="text-xs text-slate-400 mt-1">{rx.medications.length} medication{rx.medications.length > 1 ? 's' : ''}</p>
+                  <p className="text-xs text-slate-400 mt-1 dark:text-white">{rx.medications.length} medication{rx.medications.length > 1 ? 's' : ''}</p>
                 </div>
               </div>
               {expanded === rx.id ? <ChevronUp size={18} className="text-slate-400 shrink-0" /> : <ChevronDown size={18} className="text-slate-400 shrink-0" />}
@@ -61,21 +61,21 @@ export default function Prescriptions() {
             {expanded === rx.id && (
               <div className="border-t border-slate-100 p-5 space-y-5 animate-fade-in">
                 <div>
-                  <h4 className="text-sm font-bold text-slate-700 mb-3">Medications</h4>
+                  <h4 className="text-sm font-bold text-slate-700 mb-3 dark:text-white">Medications</h4>
                   <div className="space-y-3">
                     {rx.medications.map((med, i) => (
-                      <div key={i} className="bg-slate-50 rounded-xl p-4">
+                      <div key={i} className="bg-slate-50 dark:bg-[#0d0d14] rounded-xl p-4">
                         <div className="flex items-start justify-between flex-wrap gap-2">
                           <div>
-                            <p className="font-bold text-slate-800">{med.name}</p>
+                            <p className="font-bold text-slate-800 dark:text-white">{med.name}</p>
                             <p className="text-sm text-primary-600 font-medium">{med.dosage}</p>
                           </div>
                           <div className="text-right">
-                            <p className="text-sm font-semibold text-slate-700">{med.frequency}</p>
-                            <p className="text-xs text-slate-400">{med.duration}</p>
+                            <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">{med.frequency}</p>
+                            <p className="text-xs text-slate-400 dark:text-slate-500">{med.duration}</p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-1.5 mt-2 text-amber-700 bg-amber-50 px-3 py-1.5 rounded-lg">
+                        <div className="flex items-center gap-1.5 mt-2 text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-3 py-1.5 rounded-lg">
                           <Clock size={12} />
                           <p className="text-xs font-medium">{med.instructions}</p>
                         </div>
@@ -84,9 +84,9 @@ export default function Prescriptions() {
                   </div>
                 </div>
                 {rx.notes && (
-                  <div className="bg-primary-50 rounded-xl p-4">
-                    <p className="text-xs font-bold text-primary-700 mb-1">Doctor's Notes</p>
-                    <p className="text-sm text-slate-600">{rx.notes}</p>
+                  <div className="bg-primary-50 dark:bg-primary-900/20 rounded-xl p-4">
+                    <p className="text-xs font-bold text-primary-700 dark:text-primary-400 mb-1">Doctor's Notes</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-300">{rx.notes}</p>
                   </div>
                 )}
               </div>

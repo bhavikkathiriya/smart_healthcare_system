@@ -9,41 +9,44 @@
     background-color: #f8fafc;
     color: #1e293b;
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
+  html.dark { background-color: #0a0a0f; color-scheme: dark; }
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: #f1f5f9; }
+  .dark ::-webkit-scrollbar-track { background: #111118; }
   ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  .dark ::-webkit-scrollbar-thumb { background: #2a2a3d; }
 }
 
 @layer components {
   .sidebar-link {
-    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 font-medium text-sm transition-all duration-200 hover:bg-primary-50 hover:text-primary-700 cursor-pointer;
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 font-medium text-sm transition-all duration-200 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-700 dark:hover:text-primary-400 cursor-pointer;
   }
   .sidebar-link.active {
-    @apply bg-primary-600 text-white shadow-md shadow-primary-200;
+    @apply bg-primary-600 text-white shadow-md shadow-primary-200 dark:shadow-primary-900/50;
   }
   .stat-card {
-    @apply bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 animate-slide-up;
+    @apply bg-white dark:bg-[#0d0d14] rounded-2xl p-6 border border-slate-100 dark:border-[#ffffff08] shadow-sm dark:shadow-none hover:shadow-md transition-all duration-300 animate-slide-up;
+  }
+  .card {
+    @apply bg-white dark:bg-[#0d0d14] rounded-2xl border border-slate-100 dark:border-[#ffffff08] shadow-sm dark:shadow-none;
   }
   .btn-primary {
     @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md active:scale-95;
   }
   .btn-secondary {
-    @apply bg-white hover:bg-slate-50 text-slate-700 font-semibold px-5 py-2.5 rounded-xl border border-slate-200 transition-all duration-200 active:scale-95;
+    @apply bg-white dark:bg-dark-surface hover:bg-slate-50 dark:hover:bg-dark-hover text-slate-700 dark:text-slate-300 font-semibold px-5 py-2.5 rounded-xl border border-slate-200 dark:border-dark-border transition-all duration-200 active:scale-95;
   }
   .btn-danger {
     @apply bg-red-500 hover:bg-red-600 text-white font-semibold px-5 py-2.5 rounded-xl transition-all duration-200 active:scale-95;
   }
   .input-field {
-    @apply w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition-all duration-200 text-sm;
+    @apply w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-surface text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition-all duration-200 text-sm;
   }
-  .card {
-    @apply bg-white rounded-2xl border border-slate-100 shadow-sm;
-  }
-  .badge-green { @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700; }
-  .badge-yellow { @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700; }
-  .badge-red { @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-600; }
-  .badge-blue { @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-primary-50 text-primary-700; }
-  .badge-gray { @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600; }
+  .badge-green { @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400; }
+  .badge-yellow { @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400; }
+  .badge-red { @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400; }
+  .badge-blue { @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400; }
+  .badge-gray { @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-dark-muted text-slate-600 dark:text-slate-400; }
 }

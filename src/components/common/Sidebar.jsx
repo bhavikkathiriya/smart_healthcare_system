@@ -46,11 +46,11 @@ export default function Sidebar({ isOpen }) {
       {/* Mobile Overlay */}
       {isOpen && <div className="fixed inset-0 bg-black/30 z-30 lg:hidden" />}
 
-      <aside className={`fixed top-0 left-0 h-full w-64 bg-white border-r border-slate-100 z-40 flex flex-col transition-transform duration-300 ease-in-out
+      <aside className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-[#0a0a10] border-r border-slate-100 dark:border-[#ffffff08] z-40 flex flex-col transition-all duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
 
         {/* Logo */}
-        <div className="h-16 flex items-center px-6 border-b border-slate-100">
+        <div className="h-16 flex items-center px-6 border-b border-slate-100 dark:border-[#ffffff08]">
           <div className="flex items-center gap-3">
             <div className={`w-9 h-9 bg-gradient-to-br ${theme.gradient} rounded-xl flex items-center justify-center shadow-md`}>
               <span className="text-white font-black text-sm">M+</span>
@@ -91,7 +91,7 @@ export default function Sidebar({ isOpen }) {
         </nav>
 
         {/* Footer */}
-        <div className="px-4 py-4 border-t border-slate-100">
+        <div className="px-4 py-4 border-t border-slate-100 dark:border-[#ffffff08]">
           <div className="flex items-center gap-2 px-2">
             <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse-soft"></div>
             <span className="text-xs text-slate-500 font-medium">System Online</span>

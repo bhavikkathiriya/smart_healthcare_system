@@ -17,7 +17,7 @@ export default function PatientDashboard() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Good Morning, <span className="text-primary-600">{user?.name?.split(' ')[0]}</span> 👋</h1>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Good Morning, <span className="text-primary-600">{user?.name?.split(' ')[0]}</span> 👋</h1>
           <p className="text-slate-500 text-sm mt-1">Here's your health overview for today</p>
         </div>
         <Link to="/patient/book-appointment" className="btn-primary text-sm hidden sm:flex items-center gap-2">
@@ -26,11 +26,11 @@ export default function PatientDashboard() {
       </div>
 
       {/* Alert */}
-      <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3">
-        <AlertCircle size={18} className="text-amber-600 shrink-0 mt-0.5" />
+      <div className="bg-amber-50 dark:bg-[#1a1200] border border-amber-200 dark:border-amber-500/20 rounded-2xl p-4 flex items-start gap-3">
+        <AlertCircle size={18} className="text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
         <div>
-          <p className="font-semibold text-amber-800 text-sm">Upcoming Appointment</p>
-          <p className="text-amber-700 text-xs mt-0.5">You have an appointment with Dr. Sarah Mitchell tomorrow at 10:00 AM</p>
+          <p className="font-semibold text-amber-800 dark:text-amber-300 text-sm">Upcoming Appointment</p>
+          <p className="text-amber-700 dark:text-amber-400/80 text-xs mt-0.5">You have an appointment with Dr. Sarah Mitchell tomorrow at 10:00 AM</p>
         </div>
       </div>
 
@@ -47,8 +47,8 @@ export default function PatientDashboard() {
         <div className="lg:col-span-2 card p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="font-bold text-slate-800">Blood Pressure Trend</h3>
-              <p className="text-xs text-slate-400 mt-0.5">Today's monitoring</p>
+              <h3 className="font-bold text-slate-800 dark:text-white">Blood Pressure Trend</h3>
+              <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Today's monitoring</p>
             </div>
             <span className="badge-blue">Today</span>
           </div>
@@ -60,10 +60,10 @@ export default function PatientDashboard() {
                   <stop offset="95%" stopColor="#1b8bf1" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-              <XAxis dataKey="time" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} domain={[120, 160]} />
-              <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff08" />
+              <XAxis dataKey="time" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} domain={[120, 160]} />
+              <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #ffffff15', background: '#0d0d14', color: '#e2e8f0' }} />
               <Area type="monotone" dataKey="bp" stroke="#1b8bf1" strokeWidth={2.5} fill="url(#bpGrad)" name="BP (mmHg)" dot={{ r: 4, fill: '#1b8bf1' }} />
             </AreaChart>
           </ResponsiveContainer>
@@ -72,9 +72,9 @@ export default function PatientDashboard() {
         {/* Quick Info */}
         <div className="space-y-4">
           <div className="card p-5">
-            <h3 className="font-bold text-slate-800 text-sm mb-4">Health Metrics</h3>
+            <h3 className="font-bold text-slate-800 dark:text-white text-sm mb-4">Health Metrics</h3>
             {[
-              { label: 'Blood Pressure', value: '138/88', status: 'warning', icon: Activity },
+              { label: 'Blood Pressure', value: '138/88', status: 'warning', icon: Activity }, 
               { label: 'Heart Rate', value: '76 bpm', status: 'good', icon: Heart },
               { label: 'SpO2', value: '98%', status: 'good', icon: Activity },
               { label: 'Blood Group', value: 'O+', status: 'info', icon: Heart },
@@ -87,7 +87,7 @@ export default function PatientDashboard() {
           </div>
           <Link to="/patient/prescriptions" className="card p-4 flex items-center gap-3 hover:shadow-md transition-all group">
             <div className="bg-teal-100 p-2.5 rounded-xl"><Pill size={18} className="text-teal-600" /></div>
-            <div className="flex-1"><p className="text-sm font-semibold text-slate-800">Active Prescription</p><p className="text-xs text-slate-400">Lisinopril 10mg</p></div>
+            <div className="flex-1"><p className="text-sm font-semibold text-slate-800 dark:text-white">Active Prescription</p><p className="text-xs text-slate-400">Lisinopril 10mg</p></div>
             <ChevronRight size={16} className="text-slate-300 group-hover:text-primary-500 transition-colors" />
           </Link>
         </div>
@@ -96,7 +96,7 @@ export default function PatientDashboard() {
       {/* Appointments */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-bold text-slate-800">Upcoming Appointments</h3>
+          <h3 className="font-bold text-slate-800 dark:text-white">Upcoming Appointments</h3>
           <Link to="/patient/book-appointment" className="text-sm text-primary-600 font-semibold hover:text-primary-700 flex items-center gap-1">
             View All <ChevronRight size={14} />
           </Link>
@@ -109,7 +109,7 @@ export default function PatientDashboard() {
       {/* Recent History */}
       <div className="card overflow-hidden">
         <div className="p-5 border-b border-slate-50 flex items-center justify-between">
-          <h3 className="font-bold text-slate-800">Recent Medical History</h3>
+          <h3 className="font-bold text-slate-800 dark:text-white">Recent Medical History</h3>
           <Link to="/patient/history" className="text-xs text-primary-600 font-semibold">View All</Link>
         </div>
         <div className="divide-y divide-slate-50">

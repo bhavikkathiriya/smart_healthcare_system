@@ -16,9 +16,9 @@ export default function StatCard({ title, value, subtitle, icon: Icon, color, tr
     <div className={`stat-card border ${c.border}`}>
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm text-slate-500 font-medium mb-1">{title}</p>
-          <p className="text-3xl font-bold text-slate-800 leading-none">{value}</p>
-          {subtitle && <p className="text-xs text-slate-400 mt-2">{subtitle}</p>}
+          <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-1">{title}</p>
+          <p className="text-3xl font-bold text-slate-800 dark:text-white leading-none">{value}</p>
+          {subtitle && <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">{subtitle}</p>}
         </div>
         <div className={`${c.iconBg} p-3 rounded-2xl`}>
           <Icon size={22} className={c.icon} />

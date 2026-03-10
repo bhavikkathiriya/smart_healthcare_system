@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 import LoginPage from './pages/auth/LoginPage';
 import Layout from './components/common/Layout';
@@ -36,56 +37,58 @@ function RootRedirect() {
 
 export default function App() {
   return (
-    <HashRouter>
-      <AuthProvider>
-        <ToastProvider>
-          <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/" element={<RootRedirect />} />
+      <ThemeProvider>
+        <HashRouter>
+        <AuthProvider>
+          <ToastProvider>
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/" element={<RootRedirect />} />
 
-            {/* Patient Routes */}
-            <Route path="/patient" element={
-              <ProtectedRoute allowedRoles={['patient']}>
-                <Layout />
-              </ProtectedRoute>
-            }>
-              <Route index element={<PatientDashboard />} />
-              <Route path="book-appointment" element={<BookAppointment />} />
-              <Route path="prescriptions" element={<Prescriptions />} />
-              <Route path="history" element={<MedicalHistory />} />
-              <Route path="profile" element={<ProfilePage />} />
-            </Route>
+              {/* Patient Routes */}
+              <Route path="/patient" element={
+                <ProtectedRoute allowedRoles={['patient']}>
+                  <Layout />
+                </ProtectedRoute>
+              }>
+                <Route index element={<PatientDashboard />} />
+                <Route path="book-appointment" element={<BookAppointment />} />
+                <Route path="prescriptions" element={<Prescriptions />} />
+                <Route path="history" element={<MedicalHistory />} />
+                <Route path="profile" element={<ProfilePage />} />
+              </Route>
 
-            {/* Doctor Routes */}
-            <Route path="/doctor" element={
-              <ProtectedRoute allowedRoles={['doctor']}>
-                <Layout />
-              </ProtectedRoute>
-            }>
-              <Route index element={<DoctorDashboard />} />
-              <Route path="appointments" element={<DoctorAppointments />} />
-              <Route path="patients" element={<PatientRecords />} />
-              <Route path="prescription" element={<WritePrescription />} />
-              <Route path="profile" element={<DoctorProfile />} />
-            </Route>
+              {/* Doctor Routes */}
+              <Route path="/doctor" element={
+                <ProtectedRoute allowedRoles={['doctor']}>
+                  <Layout />
+                </ProtectedRoute>
+              }>
+                <Route index element={<DoctorDashboard />} />
+                <Route path="appointments" element={<DoctorAppointments />} />
+                <Route path="patients" element={<PatientRecords />} />
+                <Route path="prescription" element={<WritePrescription />} />
+                <Route path="profile" element={<DoctorProfile />} />
+              </Route>
 
-            {/* Admin Routes */}
-            <Route path="/admin" element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <Layout />
-              </ProtectedRoute>
-            }>
-              <Route index element={<AdminDashboard />} />
-              <Route path="doctors" element={<ManageDoctors />} />
-              <Route path="patients" element={<ManagePatients />} />
-              <Route path="appointments" element={<AppointmentManagement />} />
-              <Route path="overview" element={<SystemOverview />} />
-            </Route>
+              {/* Admin Routes */}
+              <Route path="/admin" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <Layout />
+                </ProtectedRoute>
+              }>
+                <Route index element={<AdminDashboard />} />
+                <Route path="doctors" element={<ManageDoctors />} />
+                <Route path="patients" element={<ManagePatients />} />
+                <Route path="appointments" element={<AppointmentManagement />} />
+                <Route path="overview" element={<SystemOverview />} />
+              </Route>
 
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </ToastProvider>
-      </AuthProvider>
-    </HashRouter>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </ToastProvider>
+        </AuthProvider>
+      </HashRouter>
+    </ThemeProvider>
   );
 }

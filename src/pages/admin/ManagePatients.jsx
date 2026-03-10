@@ -27,8 +27,8 @@ export default function ManagePatients() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Manage Patients</h1>
-          <p className="text-slate-500 text-sm mt-1">{patients.length} registered patients</p>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Manage Patients</h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">{patients.length} registered patients</p>
         </div>
       </div>
 
@@ -47,7 +47,7 @@ export default function ManagePatients() {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
-        <div className="flex items-center gap-2 bg-white rounded-xl border border-slate-200 px-4 py-2.5 flex-1">
+        <div className="flex items-center gap-2 bg-white dark:bg-[#16161f] rounded-xl border border-slate-200 dark:border-[#ffffff15] px-4 py-2.5 flex-1">
           <Search size={16} className="text-slate-400" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search patients..."
             className="bg-transparent text-sm outline-none flex-1 text-slate-700 placeholder-slate-400" />

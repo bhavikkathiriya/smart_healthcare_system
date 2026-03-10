@@ -20,20 +20,20 @@ export default function MedicalHistory() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">Medical History</h1>
-        <p className="text-slate-500 text-sm mt-1">Complete record of your medical visits</p>
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Medical History</h1>
+        <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Complete record of your medical visits</p>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
-        <div className="flex items-center gap-2 bg-white rounded-xl border border-slate-200 px-4 py-2.5 flex-1">
+        <div className="flex items-center gap-2 bg-white dark:bg-[#16161f] rounded-xl border border-slate-200 dark:border-[#ffffff15] px-4 py-2.5 flex-1">
           <Search size={16} className="text-slate-400" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search history..."
-            className="bg-transparent text-sm outline-none flex-1 text-slate-700 placeholder-slate-400" />
+            className="bg-transparent text-sm outline-none flex-1 text-slate-700 dark:text-slate-300 placeholder-slate-400 dark:placeholder-slate-600" />
         </div>
         <div className="flex gap-2 flex-wrap">
           {types.map(t => (
             <button key={t} onClick={() => setFilter(t)}
-              className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${filter === t ? 'bg-primary-600 text-white border-primary-600' : 'bg-white border-slate-200 text-slate-600 hover:border-primary-300'}`}>
+              className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${filter === t ? 'bg-primary-600 text-white border-primary-600' : 'bg-white dark:bg-[#16161f] border-slate-200 dark:border-[#ffffff15] text-slate-600 dark:text-slate-300 hover:border-primary-300'}`}>
               {t}
             </button>
           ))}
