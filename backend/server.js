@@ -5,7 +5,7 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({
-  origin: 'https://smarthealthcaresystem.vercel.app',
+  origin: ['https://smarthealthcaresystem.vercel.app', 'http://localhost:5173'],
   credentials: true,
 }));
 
