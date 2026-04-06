@@ -4,8 +4,8 @@ const db = require('../config/db');
 const getAllDoctors = async (req, res) => {
   try {
     const [rows] = await db.query(`
-      SELECT u.id, u.name, u.email, u.avatar,
-             dp.specialty, dp.experience, dp.rating, dp.total_patients
+      SELECT u.id, u.name, u.email, u.avatar, u.city, u.state,
+       dp.specialty, dp.experience, dp.rating, dp.total_patients
       FROM users u
       JOIN doctor_profiles dp ON u.id = dp.user_id
       WHERE u.status = 'active' AND dp.approval_status = 'approved'

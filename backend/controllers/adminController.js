@@ -76,8 +76,8 @@ const getAllDoctors = async (req, res) => {
 const getAllPatients = async (req, res) => {
   try {
     const [rows] = await db.query(`
-      SELECT u.id, u.name, u.email, u.phone, u.status, u.created_at,
-             pp.date_of_birth, pp.gender, pp.blood_group
+      SELECT u.id, u.name, u.email, u.phone, u.status, u.city, u.state, u.created_at,
+       pp.date_of_birth, pp.gender, pp.blood_group
       FROM users u
       LEFT JOIN patient_profiles pp ON u.id = pp.user_id
       WHERE u.role = 'patient'

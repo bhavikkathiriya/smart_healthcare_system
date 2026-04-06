@@ -95,8 +95,8 @@ const registerPatient = async (req, res) => {
 
     // Insert user
     const [result] = await db.query(
-      'INSERT INTO users (name, email, password, role, status, avatar, phone) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [name, email, hashedPassword, 'patient', 'active', avatar, phone || null]
+    'INSERT INTO users (name, email, password, role, status, avatar, phone, city, state) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [name, email, hashedPassword, 'patient', 'active', avatar, phone || null, city || null, 'Gujarat']
     );
 
     // Insert patient profile
@@ -116,7 +116,7 @@ const registerPatient = async (req, res) => {
 // ─── REGISTER DOCTOR (pending approval) ──────────────────────────────────────
 const registerDoctor = async (req, res) => {
   try {
-    const { name, email, password, phone, specialty, experience, qualification, license_number } = req.body;
+    const { name, email, password, phone, specialty, experience, qualification, license_number, city } = req.body;
 
     if (!name || !email || !password || !specialty || !license_number)
       return res.status(400).json({ success: false, message: 'Name, email, password, specialty and license number are required' });
@@ -132,8 +132,8 @@ const registerDoctor = async (req, res) => {
 
     // Insert user with pending status
     const [result] = await db.query(
-      'INSERT INTO users (name, email, password, role, status, avatar, phone) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [name, email, hashedPassword, 'doctor', 'pending', avatar, phone || null]
+      'INSERT INTO users (name, email, password, role, status, avatar, phone, city, state) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [name, email, hashedPassword, 'doctor', 'pending', avatar, phone || null, city || null, 'Gujarat']
     );
 
     // Insert doctor profile with pending approval
