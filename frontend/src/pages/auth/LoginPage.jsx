@@ -37,6 +37,7 @@ export default function LoginPage() {
   const [experience, setExperience] = useState('');
   const [qualification, setQualification] = useState('');
   const [licenseNumber, setLicenseNumber] = useState('');
+  const [city, setCity] = useState('');
 
   const { login, registerPatient, registerDoctor } = useAuth();
   const toast = useToast();
@@ -63,6 +64,7 @@ export default function LoginPage() {
     const result = await registerPatient({
       name: regName, email: regEmail, password: regPassword,
       phone: regPhone, date_of_birth: dob, gender, blood_group: bloodGroup,
+      city,
     });
     setLoading(false);
     if (result.success) {
@@ -81,6 +83,7 @@ export default function LoginPage() {
     const result = await registerDoctor({
       name: regName, email: regEmail, password: regPassword,
       phone: regPhone, specialty, experience, qualification, license_number: licenseNumber,
+      city,
     });
     setLoading(false);
     if (result.success) {
@@ -209,6 +212,17 @@ export default function LoginPage() {
                     <label className={labelClass}>Date of Birth</label>
                     <input type="date" value={dob} onChange={e => setDob(e.target.value)} className={inputClass} />
                   </div>
+                  <div className="col-span-2">
+                    <label className={labelClass}>City</label>
+                    <select value={city} onChange={e => setCity(e.target.value)} className={inputClass}>
+                      <option value="">Select City</option>
+                      {['Ahmedabad','Surat','Vadodara','Rajkot','Bhavnagar','Jamnagar',
+                        'Gandhinagar','Junagadh','Anand','Nadiad','Mehsana','Morbi',
+                        'Bhuj','Surendranagar','Amreli','Bharuch'].map(c => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                    </select>
+                  </div>
                   <div>
                     <label className={labelClass}>Gender</label>
                     <select value={gender} onChange={e => setGender(e.target.value)} className={inputClass}>
@@ -264,6 +278,17 @@ export default function LoginPage() {
                     <label className={labelClass}>Phone</label>
                     <input type="tel" value={regPhone} onChange={e => setRegPhone(e.target.value)}
                       placeholder="+91 9876543210" className={inputClass} />
+                  </div>
+                  <div className="col-span-2">
+                    <label className={labelClass}>City</label>
+                    <select value={city} onChange={e => setCity(e.target.value)} className={inputClass}>
+                      <option value="">Select City</option>
+                      {['Ahmedabad','Surat','Vadodara','Rajkot','Bhavnagar','Jamnagar',
+                        'Gandhinagar','Junagadh','Anand','Nadiad','Mehsana','Morbi',
+                        'Bhuj','Surendranagar','Amreli','Bharuch'].map(c => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <label className={labelClass}>Specialty *</label>

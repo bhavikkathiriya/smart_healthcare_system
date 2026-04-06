@@ -192,8 +192,11 @@ export default function BookAppointment() {
                           </>
                         )}
                       </div>
-                      <div className="flex items-center gap-2 mt-2">
+                      <div className="flex items-center gap-2 mt-2 flex-wrap">
                         <span className="badge-green text-[10px]">Available</span>
+                        {doc.city && (
+                          <span className="text-xs text-slate-400 dark:text-slate-500">📍 {doc.city}, Gujarat</span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -283,6 +286,7 @@ export default function BookAppointment() {
               {[
                 { label: 'Doctor', value: selectedDoctor?.name },
                 { label: 'Specialty', value: selectedDoctor?.specialty },
+                { label: 'Doctor City', value: selectedDoctor?.city ? `${selectedDoctor.city}, Gujarat` : 'N/A' },
                 { label: 'Type', value: type },
                 { label: 'Date', value: selectedDate },
                 { label: 'Time', value: selectedTime },
