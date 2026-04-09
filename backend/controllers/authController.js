@@ -3,6 +3,11 @@ const jwt = require('jsonwebtoken');
 const db = require('../config/db');
 require('dotenv').config();
 
+const { sendOTPEmail } = require('../utils/emailService');
+
+// In-memory OTP store (key: email, value: { otp, expiry, userData })
+const otpStore = new Map();
+
 // Generate JWT token
 const generateToken = (user) => {
   return jwt.sign(
@@ -77,7 +82,15 @@ const login = async (req, res) => {
 // ─── REGISTER PATIENT ─────────────────────────────────────────────────────────
 const registerPatient = async (req, res) => {
   try {
-    const { name, email, password, phone, date_of_birth, gender, blood_group } = req.body;
+    const { name, email, password, phone, date_of_birth, gender, blood_group , city} = req.body;
+
+    // Check OTP was verified
+    const stored = otpStore.get(email);
+    if (!stored || !stored.verified) {
+      return res.status(400).json({ success: false, message: 'Please verify your email OTP first' });
+    }
+    // Clear OTP after successful registration
+    otpStore.delete(email);
 
     if (!name || !email || !password)
       return res.status(400).json({ success: false, message: 'Name, email and password are required' });
@@ -117,6 +130,14 @@ const registerPatient = async (req, res) => {
 const registerDoctor = async (req, res) => {
   try {
     const { name, email, password, phone, specialty, experience, qualification, license_number, city } = req.body;
+
+    // Check OTP was verified
+    const stored = otpStore.get(email);
+    if (!stored || !stored.verified) {
+      return res.status(400).json({ success: false, message: 'Please verify your email OTP first' });
+    }
+    // Clear OTP after successful registration
+    otpStore.delete(email);
 
     if (!name || !email || !password || !specialty || !license_number)
       return res.status(400).json({ success: false, message: 'Name, email, password, specialty and license number are required' });
@@ -166,4 +187,64 @@ const getMe = async (req, res) => {
   }
 };
 
-module.exports = { login, registerPatient, registerDoctor, getMe };
+// ─── SEND OTP ─────────────────────────────────────────────────────────────────
+const sendOTP = async (req, res) => {
+  try {
+    const { email, name } = req.body;
+
+    if (!email || !name)
+      return res.status(400).json({ success: false, message: 'Email and name are required' });
+
+    // Check if email already exists
+    const [existing] = await db.query('SELECT id FROM users WHERE email = ?', [email]);
+    if (existing.length > 0)
+      return res.status(409).json({ success: false, message: 'Email already registered' });
+
+    // Generate 4 digit OTP
+    const otp = Math.floor(1000 + Math.random() * 9000).toString();
+    const expiry = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+    // Store OTP
+    otpStore.set(email, { otp, expiry });
+
+    // Send email
+    await sendOTPEmail(email, name, otp);
+
+    res.json({ success: true, message: `OTP sent to ${email}` });
+  } catch (err) {
+    console.error('Send OTP error:', err);
+    res.status(500).json({ success: false, message: 'Failed to send OTP. Check email configuration.' });
+  }
+};
+
+// ─── VERIFY OTP ───────────────────────────────────────────────────────────────
+const verifyOTP = (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    if (!email || !otp)
+      return res.status(400).json({ success: false, message: 'Email and OTP are required' });
+
+    const stored = otpStore.get(email);
+
+    if (!stored)
+      return res.status(400).json({ success: false, message: 'OTP not found. Please request a new one.' });
+
+    if (Date.now() > stored.expiry) {
+      otpStore.delete(email);
+      return res.status(400).json({ success: false, message: 'OTP expired. Please request a new one.' });
+    }
+
+    if (stored.otp !== otp)
+      return res.status(400).json({ success: false, message: 'Invalid OTP. Please try again.' });
+
+    // OTP verified — mark as verified
+    otpStore.set(email, { ...stored, verified: true });
+
+    res.json({ success: true, message: 'OTP verified successfully' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+module.exports = { login, registerPatient, registerDoctor, getMe, sendOTP, verifyOTP };
