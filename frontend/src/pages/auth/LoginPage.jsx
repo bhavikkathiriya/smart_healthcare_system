@@ -12,6 +12,10 @@ const roles = [
 ];
 
 export default function LoginPage() {
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [otpLoading, setOtpLoading] = useState(false);
   const [mode, setMode] = useState('login'); // 'login' | 'register-patient' | 'register-doctor'
   const [role, setRole] = useState('patient');
   const [showPass, setShowPass] = useState(false);
@@ -93,6 +97,58 @@ export default function LoginPage() {
       toast.error(result.message);
     }
   };
+
+  const handleSendOTP = async () => {
+    if (!regEmail || !regName) {
+      toast.error('Please enter name and email first');
+      return;
+    }
+    setOtpLoading(true);
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/send-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: regEmail, name: regName }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success(data.message);
+        setOtpSent(true);
+      } else {
+        toast.error(data.message);
+      }
+    } catch {
+      toast.error('Cannot connect to server');
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
+  const handleVerifyOTP = async () => {
+  if (!otp || otp.length !== 4) {
+    toast.error('Please enter 4 digit OTP');
+    return;
+  }
+  setOtpLoading(true);
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/verify-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: regEmail, otp }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      toast.success('Email verified! ✅');
+      setOtpVerified(true);
+    } else {
+      toast.error(data.message);
+    }
+  } catch {
+    toast.error('Cannot connect to server');
+  } finally {
+    setOtpLoading(false);
+  }
+};
 
   const inputClass = "w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-[#ffffff15] bg-white dark:bg-[#16161f] text-slate-800 dark:text-slate-200 text-sm outline-none focus:border-primary-400 transition-all placeholder-slate-400 dark:placeholder-slate-600";
   const labelClass = "block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5";
@@ -189,6 +245,41 @@ export default function LoginPage() {
                     <input type="email" value={regEmail} onChange={e => setRegEmail(e.target.value)}
                       placeholder="john@example.com" className={inputClass} required />
                   </div>
+
+                  {/* OTP Section */}
+                  {!otpVerified ? (
+                    <div className="col-span-2">
+                      {!otpSent ? (
+                        <button type="button" onClick={handleSendOTP} disabled={otpLoading || !regEmail || !regName}
+                          className="w-full py-2.5 rounded-xl border-2 border-primary-400 text-primary-600 dark:text-primary-400 font-semibold text-sm hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all disabled:opacity-50">
+                          {otpLoading ? 'Sending OTP...' : '📧 Send OTP to Email'}
+                        </button>
+                      ) : (
+                        <div className="space-y-2">
+                          <label className={labelClass}>Enter OTP *</label>
+                          <div className="flex gap-2">
+                            <input type="text" value={otp} onChange={e => setOtp(e.target.value.slice(0, 4))}
+                              placeholder="4 digit OTP" maxLength={4}
+                              className={inputClass + ' text-center text-xl font-bold tracking-widest'} />
+                            <button type="button" onClick={handleVerifyOTP} disabled={otpLoading}
+                              className="px-4 py-2 bg-primary-600 text-white rounded-xl font-semibold text-sm hover:bg-primary-700 transition-all disabled:opacity-50">
+                              {otpLoading ? '...' : 'Verify'}
+                            </button>
+                          </div>
+                          <button type="button" onClick={handleSendOTP} disabled={otpLoading}
+                            className="text-xs text-primary-600 dark:text-primary-400 hover:underline">
+                            Resend OTP
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="col-span-2 flex items-center gap-2 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-500/20 rounded-xl px-4 py-3">
+                      <span className="text-emerald-500 text-lg">✅</span>
+                      <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">Email verified successfully!</span>
+                    </div>
+                  )}
+
                   <div className="col-span-2">
                     <label className={labelClass}>Password *</label>
                     <input type="password" value={regPassword} onChange={e => setRegPassword(e.target.value)}
@@ -233,7 +324,7 @@ export default function LoginPage() {
                     </select>
                   </div>
                 </div>
-                <button type="submit" disabled={loading}
+                <button type="submit" disabled={loading || !otpVerified}
                   className="w-full py-3 bg-gradient-to-r from-primary-600 to-teal-500 text-white font-bold rounded-xl hover:opacity-90 transition-all disabled:opacity-60">
                   {loading ? 'Registering...' : 'Create Patient Account'}
                 </button>
@@ -245,7 +336,17 @@ export default function LoginPage() {
           {mode === 'register-doctor' && (
             <>
               <div className="flex items-center gap-3 mb-4">
-                <button onClick={() => setMode('login')} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 text-sm">← Back</button>
+                <button 
+                  onClick={() => {
+                    setMode('login');
+                    setOtpSent(false);
+                    setOtpVerified(false);
+                    setOtp('');
+                  }} 
+                  className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 text-sm"
+                >
+                  ← Back
+                </button>
                 <h2 className="text-xl font-bold text-slate-800 dark:text-white">Doctor Registration</h2>
               </div>
 
