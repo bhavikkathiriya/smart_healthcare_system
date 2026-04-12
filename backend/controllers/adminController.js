@@ -117,4 +117,6 @@ const deactivateUser = async (req, res) => {
   }
 };
 
+
+
 module.exports = { getPendingDoctors, approveDoctor, rejectDoctor, getAllDoctors, getAllPatients, getDashboardStats, deactivateUser };
